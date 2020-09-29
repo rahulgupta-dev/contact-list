@@ -4,14 +4,14 @@ const path = require('path')
 module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['*', '.js', '.vue', '.json','.ts','.tsx']
+    extensions: ['*', '.js', '.vue', '.json', '.ts', '.tsx']
   },
   module: {
     rules: [
@@ -40,8 +40,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.(css|scss)$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', {
+          loader: 'sass-loader',
+          options: {
+            implementation: require('sass'),
+            sassOptions: {
+              fiber: false,
+            },
+          },
+        }],
       }
     ],
   },
